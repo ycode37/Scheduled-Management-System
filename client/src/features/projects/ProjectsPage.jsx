@@ -117,7 +117,7 @@ export default function ProjectsPage() {
 
     return (
         <div className="projects-wrapper">
-            <div className="page-header">
+            <header className="page-header">
                 <h1>My Projects</h1>
 
                 <div className="header-buttons">
@@ -127,17 +127,10 @@ export default function ProjectsPage() {
                         onClick={() => setShowForm((v) => !v)}
                         type="button"
                     >
-                        {showForm ? "Close" : "Add New"}
+                        {showForm ? "Cancel" : "Add New"}
                     </button>
                 </div>
-            </div>
-
-            {/* Column headings (mostly for layout / desktop view) */}
-            <div className="projects-columns">
-                <div>Name</div>
-                <div>Scheduled Completion</div>
-                <div>Status</div>
-            </div>
+            </header>
 
             {/* Add new project form */}
             {showForm && (
@@ -148,10 +141,11 @@ export default function ProjectsPage() {
                     <div data-label="Name">
                         <input
                             type="text"
-                            placeholder="Project Name"
+                            placeholder="Creative Project Name..."
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
+                            autoFocus
                         />
                     </div>
 
@@ -164,92 +158,93 @@ export default function ProjectsPage() {
                     </div>
 
                     <div data-label="Status">
-                        <div className="project-card-status">
-                            <select value={status} onChange={(e) => setStatus(e.target.value)}>
-                                {STATUS_OPTIONS.map((o) => (
-                                    <option key={o.value} value={o.value}>
-                                        {o.label}
-                                    </option>
-                                ))}
-                            </select>
+                        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+                            {STATUS_OPTIONS.map((o) => (
+                                <option key={o.value} value={o.value}>
+                                    {o.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                            <button className="save-btn" type="submit">
-                                Save
-                            </button>
-                        </div>
+                    <div className="row-actions">
+                        <button className="save-btn" type="submit">
+                            Create
+                        </button>
                     </div>
                 </form>
             )}
 
-            <div className="projects-list">
-                {/* Empty state */}
-                {projects.length === 0 && <div className="empty">No projects yet...</div>}
+            <div className="projects-container">
+                {/* Column headings */}
+                <div className="projects-columns">
+                    <div>Project Name</div>
+                    <div>Scheduled Completion</div>
+                    <div>Status</div>
+                    <div></div>
+                </div>
 
-                {/* Render each project card */}
-                {projects.map((p) => {
-                    // meta controls status label + colour dot
-                    const meta = statusMeta(p.status);
+                <div className="projects-list">
+                    {/* Empty state */}
+                    {projects.length === 0 && (
+                        <div className="empty">No projects found. Ready to start something new?</div>
+                    )}
 
-                    // Is THIS project the one currently being edited?
-                    const isEditing = editingId === p.id;
+                    {/* Render each project card */}
+                    {projects.map((p) => {
+                        const meta = statusMeta(p.status);
+                        const isEditing = editingId === p.id;
 
-                    return (
-                        <div
-                            key={p.id}
-                            className={`project-card ${isEditing ? "project-card--editing" : ""}`}
-                        >
-                            {/* NAME */}
-                            <div data-label="Name">
-                                {isEditing ? (
-                                    // Editable name input
-                                    <input
-                                        autoFocus
-                                        type="text"
-                                        value={draft.name}
-                                        onChange={(e) =>
-                                            setDraft((d) => ({ ...d, name: e.target.value }))
-                                        }
-                                    />
-                                ) : (
-                                    // Click name to navigate to project detail page
-                                    <button
-                                        className="project-link"
-                                        onClick={() => navigate(`/projects/${p.id}`)}
-                                        type="button"
-                                    >
-                                        {p.name}
-                                    </button>
-                                )}
-                            </div>
-
-                            {/* SCHEDULED COMPLETION DATE */}
-                            <div data-label="Scheduled Completion">
-                                {isEditing ? (
-                                    // Date input expects YYYY-MM-DD
-                                    <input
-                                        type="date"
-                                        value={draft.scheduled_completion}
-                                        onChange={(e) =>
-                                            setDraft((d) => ({
-                                                ...d,
-                                                scheduled_completion: e.target.value,
-                                            }))
-                                        }
-                                    />
-                                ) : (
-                                    // Read-only formatted date
-                                    fmt(p.scheduled_completion)
-                                )}
-                            </div>
-
-                            {/* STATUS + ACTIONS */}
+                        return (
                             <div
-                                className={`project-card-status ${isEditing ? "project-card-status--edit" : ""}`}
-                                data-label="Status"
+                                key={p.id}
+                                className={`project-card ${isEditing ? "project-card--editing" : ""}`}
                             >
-                                {isEditing ? (
-                                    <>
-                                        {/* Status dropdown */}
+                                {/* NAME */}
+                                <div data-label="Name">
+                                    {isEditing ? (
+                                        <input
+                                            autoFocus
+                                            type="text"
+                                            value={draft.name}
+                                            onChange={(e) =>
+                                                setDraft((d) => ({ ...d, name: e.target.value }))
+                                            }
+                                        />
+                                    ) : (
+                                        <button
+                                            className="project-link"
+                                            onClick={() => navigate(`/projects/${p.id}`)}
+                                            type="button"
+                                        >
+                                            {p.name}
+                                        </button>
+                                    )}
+                                </div>
+
+                                {/* DATE */}
+                                <div data-label="Scheduled Completion">
+                                    {isEditing ? (
+                                        <input
+                                            type="date"
+                                            value={draft.scheduled_completion}
+                                            onChange={(e) =>
+                                                setDraft((d) => ({
+                                                    ...d,
+                                                    scheduled_completion: e.target.value,
+                                                }))
+                                            }
+                                        />
+                                    ) : (
+                                        <span style={{ color: "var(--chalk-200)", fontSize: "0.95rem" }}>
+                                            {fmt(p.scheduled_completion)}
+                                        </span>
+                                    )}
+                                </div>
+
+                                {/* STATUS */}
+                                <div data-label="Status">
+                                    {isEditing ? (
                                         <select
                                             value={draft.status}
                                             onChange={(e) =>
@@ -262,30 +257,42 @@ export default function ProjectsPage() {
                                                 </option>
                                             ))}
                                         </select>
+                                    ) : (
+                                        <div className="status-badge">
+                                            <span className={`status-dot status-dot-${meta.color}`}></span>
+                                            {meta.label}
+                                        </div>
+                                    )}
+                                </div>
 
-                                        {/* Save / Cancel buttons */}
-                                        <button className="save-btn" onClick={() => saveEdit(p.id)} type="button">
-                                            Save
-                                        </button>
-                                        <button className="link-btn" onClick={cancelEdit} type="button">
-                                            Cancel
-                                        </button>
-                                    </>
-                                ) : (
-                                    <>
-                                        {/* Read-only status display */}
-                                        <span>{meta.label}</span>
-
-                                        {/* Colour dot for quick status recognition */}
-                                        <span className={`status-dot status-dot-${meta.color}`}></span>
-
-                                        <div className="row-actions">
-                                            {/* Enable inline editing */}
-                                            <button className="link-btn" onClick={() => startEdit(p)} type="button">
+                                {/* ACTIONS */}
+                                <div className="row-actions">
+                                    {isEditing ? (
+                                        <>
+                                            <button 
+                                                className="save-btn" 
+                                                onClick={() => saveEdit(p.id)} 
+                                                type="button"
+                                            >
+                                                Save
+                                            </button>
+                                            <button 
+                                                className="link-btn" 
+                                                onClick={cancelEdit} 
+                                                type="button"
+                                            >
+                                                Cancel
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button 
+                                                className="link-btn" 
+                                                onClick={() => startEdit(p)} 
+                                                type="button"
+                                            >
                                                 Edit
                                             </button>
-
-                                            {/* Delete project via thunk */}
                                             <button
                                                 className="delete-btn"
                                                 onClick={() => dispatch(deleteProject(p.id))}
@@ -293,13 +300,13 @@ export default function ProjectsPage() {
                                             >
                                                 Delete
                                             </button>
-                                        </div>
-                                    </>
-                                )}
+                                        </>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

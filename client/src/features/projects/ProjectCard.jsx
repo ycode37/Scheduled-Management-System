@@ -180,14 +180,12 @@ export default function ProjectCard() {
                 </div>
             </div>
         );
-    }
-
-    return (
+    }    return (
         <div className="card-wrapper">
-            <div className="header">
+            <header className="header">
                 {/* Back button */}
                 <button className="link-btn" onClick={() => navigate("/projects")} type="button">
-                    Back to Projects
+                    ← Back to Projects
                 </button>
 
                 <h1 className="name">{project.name}</h1>
@@ -198,27 +196,29 @@ export default function ProjectCard() {
                         Due:{" "}
                         {project.scheduled_completion
                             ? new Date(project.scheduled_completion).toLocaleDateString("en-GB")
-                            : "-"}
+                            : "No Date"}
                     </span>
-                    <span>Status: {project.status || "-"}</span>
+                    <span className="status">
+                        Status: {project.status || "Not Started"}
+                    </span>
                 </div>
-            </div>
+            </header>
 
             <div className="tasks">
                 {/* Column labels */}
                 <div className="task-columns">
-                    <span>Task</span>
+                    <span>Task Name</span>
                     <span>Due Date</span>
-                    <span>Progress</span>
+                    <span>Progress & Actions</span>
                 </div>
 
                 {/* Loading / error / empty / list states */}
                 {loadingTasks ? (
-                    <p className="empty">Loading tasks...</p>
+                    <div className="empty">Loading your tasks...</div>
                 ) : tasksError ? (
-                    <p className="empty">{tasksError}</p>
+                    <div className="empty" style={{ color: "var(--danger)" }}>{tasksError}</div>
                 ) : projectTasks.length === 0 ? (
-                    <p className="empty">No tasks assigned to this project yet.</p>
+                    <div className="empty">No tasks assigned to this project yet. Use the form below to start.</div>
                 ) : (
                     <ul className="task-list">
                         {projectTasks.map((t) => {
@@ -228,26 +228,28 @@ export default function ProjectCard() {
                                 <li key={t.id} className="task-row">
                                     {isEditing ? (
                                         <>
-                                            {/* Edit title */}
-                                            <input
-                                                type="text"
-                                                value={draft.title}
-                                                onChange={(e) =>
-                                                    setDraft((d) => ({ ...d, title: e.target.value }))
-                                                }
-                                            />
+                                            <div data-label="Task Name">
+                                                <input
+                                                    type="text"
+                                                    value={draft.title}
+                                                    onChange={(e) =>
+                                                        setDraft((d) => ({ ...d, title: e.target.value }))
+                                                    }
+                                                    autoFocus
+                                                />
+                                            </div>
 
-                                            {/* Edit due date */}
-                                            <input
-                                                type="date"
-                                                value={draft.due_date}
-                                                onChange={(e) =>
-                                                    setDraft((d) => ({ ...d, due_date: e.target.value }))
-                                                }
-                                            />
+                                            <div data-label="Due Date">
+                                                <input
+                                                    type="date"
+                                                    value={draft.due_date}
+                                                    onChange={(e) =>
+                                                        setDraft((d) => ({ ...d, due_date: e.target.value }))
+                                                    }
+                                                />
+                                            </div>
 
-                                            {/* Edit progress + action buttons */}
-                                            <div className="task-progress">
+                                            <div className="task-progress" data-label="Progress">
                                                 <input
                                                     type="number"
                                                     min={0}
@@ -256,9 +258,8 @@ export default function ProjectCard() {
                                                     onChange={(e) =>
                                                         setDraft((d) => ({ ...d, progress: e.target.value }))
                                                     }
-                                                    style={{ width: "60px" }}
+                                                    style={{ width: "80px" }}
                                                 />
-
                                                 <button
                                                     className="save-btn"
                                                     onClick={() => saveEdit(t.id)}
@@ -266,7 +267,6 @@ export default function ProjectCard() {
                                                 >
                                                     Save
                                                 </button>
-
                                                 <button className="link-btn" onClick={cancelEdit} type="button">
                                                     Cancel
                                                 </button>
@@ -274,28 +274,29 @@ export default function ProjectCard() {
                                         </>
                                     ) : (
                                         <>
-                                            {/* Read-only view */}
-                                            <span className="task-name">
-                                                <strong>{t.title}</strong>
-                                            </span>
+                                            <div className="task-name" data-label="Task Name">
+                                                {t.title}
+                                            </div>
 
-                                            <span className="task-due muted">
+                                            <div className="task-due" data-label="Due Date">
                                                 {t.due_date ? t.due_date.slice(0, 10) : "-"}
-                                            </span>
+                                            </div>
 
-                                            <span className="task-progress">
-                                                {t.progress}%{" "}
-                                                <button className="link-btn" onClick={() => startEdit(t)} type="button">
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    className="delete-btn"
-                                                    onClick={() => handleDelete(t.id)}
-                                                    type="button"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </span>
+                                            <div className="task-progress" data-label="Progress">
+                                                <span style={{ fontWeight: 700, color: "var(--accent)" }}>{t.progress}%</span>
+                                                <div style={{ marginLeft: "auto", display: "flex", gap: "12px" }}>
+                                                    <button className="link-btn" onClick={() => startEdit(t)} type="button">
+                                                        Edit
+                                                    </button>
+                                                    <button
+                                                        className="delete-btn"
+                                                        onClick={() => handleDelete(t.id)}
+                                                        type="button"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </>
                                     )}
                                 </li>
@@ -306,17 +307,27 @@ export default function ProjectCard() {
 
                 {/* Inline "add new task" form */}
                 <form className="add-task-inline" onSubmit={handleAddTask}>
-                    <input
-                        type="text"
-                        placeholder="New Task"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required
-                    />
+                    <div data-label="Task Name" style={{ flex: 1 }}>
+                        <input
+                            type="text"
+                            placeholder="Add a new milestone..."
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                            style={{ width: "100%" }}
+                        />
+                    </div>
 
-                    <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
+                    <div data-label="Due Date">
+                        <input 
+                            type="date" 
+                            value={dueDate} 
+                            onChange={(e) => setDueDate(e.target.value)} 
+                            style={{ width: "100%" }}
+                        />
+                    </div>
 
-                    <div className="task-progress">
+                    <div className="task-progress" data-label="Progress">
                         <input
                             type="number"
                             min={0}
@@ -324,7 +335,7 @@ export default function ProjectCard() {
                             value={progress}
                             onChange={(e) => setProgress(e.target.value)}
                             placeholder="%"
-                            style={{ width: "60px" }}
+                            style={{ width: "70px" }}
                         />
                         <button type="submit" className="save-btn">
                             Add Task

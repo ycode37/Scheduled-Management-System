@@ -1,96 +1,209 @@
-.calendar {
-    width: 100%;
-    height: 69vh;
+.calendar-wrapper-premium {
+    display: flex;
+    gap: 32px;
+    height: calc(100vh - 12vw);
+    max-width: var(--container-width);
+    margin: 0 auto;
+    animation: slideUpFade 0.8s var(--ease-out-expo);
 }
 
-.fc .task-pill {
-    color: #fff;
-    border-radius: 6px;
-    padding: 4px 6px;
-    font-size: 12px;
-    line-height: 1.2;
-    overflow: hidden;
-    transition: max-height 180ms ease, padding 180ms ease;
-    max-height: 22px;
-    cursor: pointer;
-}
-
-.fc .task-pill .title {
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.calendar-main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--ink-800);
+    border: 1px solid var(--edge);
+    border-radius: 12px;
     overflow: hidden;
 }
 
-.fc .task-pill.open {
-    max-height: 300px;
-    padding: 6px 8px;
-    white-space: normal;
+.calendar-main-area .page-header {
+    padding: 32px;
+    border-bottom: 1px solid var(--edge);
+    background: var(--ink-700);
 }
 
-.fc .task-pill .details {
-    margin-top: 6px;
-    font-size: 11px;
-}
-
-.fc .task-pill .desc {
-    margin: 0 0 6px 0;
-}
-
-.fc .task-pill .meta {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px 10px;
-}
-
-.fc .task-pill .meta dt {
-    opacity: 0.85;
-}
-
-.fc .task-pill .meta dd {
+.calendar-main-area .page-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
     margin: 0;
+    color: var(--chalk-100);
+}
+
+.calendar-main-area .subtitle {
+    font-size: 0.85rem;
+    color: var(--chalk-300);
+    margin-top: 4px;
+}
+
+.calendar-container {
+    flex: 1;
+    padding: 24px;
+    overflow: hidden;
+}
+
+/* FullCalendar Customization */
+.fc {
+    --fc-border-color: var(--edge);
+    --fc-daygrid-event-dot-width: 8px;
+    --fc-today-bg-color: var(--accent-soft);
+    background: transparent;
+    color: var(--chalk-100);
+}
+
+.fc .fc-toolbar-title {
+    font-family: var(--font-main);
+    font-size: 1.25rem;
     font-weight: 600;
 }
 
-.fc-daygrid-event-harness,
-.fc-daygrid-event {
-    overflow: visible;
+.fc .fc-button-primary {
+    background: var(--ink-600);
+    border: 1px solid var(--edge-active);
+    color: var(--chalk-100);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 8px 16px;
+    transition: all 0.2s ease;
 }
 
-.fc-daygrid-event .fc-event-main {
-    overflow: visible;
+.fc .fc-button-primary:hover {
+    background: var(--ink-500);
 }
 
-.fc .fc-button {
-    font-size: 12px;
-    padding: 2px 6px;
-    height: 26px;
-    line-height: 1.2;
+.fc .fc-button-primary:disabled {
+    opacity: 0.3;
+}
+
+.fc .fc-col-header-cell-cushion {
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--chalk-300);
+    padding: 12px 0;
+}
+
+.fc .fc-daygrid-day-number {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--chalk-200);
+    padding: 8px;
+}
+
+.fc .task-pill {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+    transition: all 0.2s var(--ease-out-expo);
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.fc .task-pill:hover {
+    filter: brightness(1.2);
+    transform: scale(1.02);
+}
+
+/* Sidebar Styles */
+.calendar-sidebar {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sidebar-section {
+    background: var(--ink-800);
+    border: 1px solid var(--edge);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sidebar-section h3 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--chalk-300);
+    margin: 0;
+}
+
+.sidebar-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.side-task-card {
+    background: var(--ink-700);
+    border: 1px solid var(--edge);
+    border-left: 4px solid var(--accent);
+    padding: 12px 16px;
     border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: transform 0.2s ease;
 }
 
+.side-task-card:hover {
+    transform: translateX(4px);
+    background: var(--ink-600);
+}
 
-/*  Responsive  */
+.side-task-card.upcoming {
+    border-left: 1px solid var(--edge);
+    background: var(--ink-800);
+}
 
-@media (max-width: 1024px) {
-    .calendar {
+.task-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--chalk-100);
+    line-height: 1.2;
+}
+
+.task-sub {
+    font-size: 0.75rem;
+    color: var(--chalk-300);
+    font-weight: 500;
+}
+
+.empty-side {
+    font-size: 0.85rem;
+    color: var(--chalk-300);
+    font-style: italic;
+    opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .calendar-wrapper-premium {
+        flex-direction: column;
+        height: auto;
+    }
+    .calendar-sidebar {
         width: 100%;
-        height: 80vh;
-        margin: 24px auto;
+        flex-direction: row;
+    }
+    .sidebar-section {
+        flex: 1;
     }
 }
 
-@media (max-width: 720px) {
-    .calendar {
-        width: auto;
-        height: 76vh;
+@media (max-width: 768px) {
+    .calendar-sidebar {
+        flex-direction: column;
     }
-
-    .fc .fc-toolbar-title {
-        font-size: 1rem;
-    }
-
-    .fc .fc-button {
-        padding: 3px 6px;
-        font-size: 0.7rem;
+    .calendar-main-area .page-header h1 {
+        font-size: 1.75rem;
     }
 }

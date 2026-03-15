@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useMemo, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 // FullCalendar + plugins (month/week/day views + click interactions)
 import FullCalendar from "@fullcalendar/react";
@@ -7,11 +7,17 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
+import { fetchTasks } from "../tasks/tasksSlice";
 import "./calendarPage.css";
 
 export default function CalendarPage() {
-  // Pull tasks from Redux store (keeps UI in sync with the rest of the app)
+  const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks.tasks);
+
+  // Fetch tasks on mount if not already there
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
 
   // Track which event is "expanded" (to show extra details)
   const [selectedEventId, setSelectedEventId] = useState(null);
@@ -118,42 +124,83 @@ export default function CalendarPage() {
     );
   };
 
+  // Today's date in YYYY-MM-DD format for comparison
+  const todayStr = new Date().toISOString().split("T")[0];
+
+  // Logic for Today's Focus and Upcoming Tasks sidebar
+  const todayTasks = useMemo(() => {
+    return tasks.filter((t) => t.due_date && t.due_date.slice(0, 10) === todayStr);
+  }, [tasks, todayStr]);
+
+  const upcomingTasks = useMemo(() => {
+    return tasks
+      .filter((t) => t.due_date && t.due_date.slice(0, 10) > todayStr)
+      .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
+      .slice(0, 5); // Just show top 5 upcoming
+  }, [tasks, todayStr]);
+
   return (
-    <div className="calendar-card-wrapper">
-      <div className="calendar">
-        <FullCalendar
-          // Register calendar plugins (month grid, week/day time grid, click support)
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+    <div className="calendar-wrapper-premium">
+      <div className="calendar-main-area">
+        <header className="page-header">
+          <h1>Calendar</h1>
+          <p className="subtitle">Track your project milestones and deadlines</p>
+        </header>
 
-          // Default view when the page loads
-          initialView="dayGridMonth"
-
-          // Top toolbar layout + buttons
-          headerToolbar={{
-            start: "today prev,next",
-            center: "title",
-            end: "dayGridMonth,timeGridWeek,timeGridDay",
-          }}
-
-          // Make the calendar fill the wrapper height
-          height="100%"
-
-          // Provide events array built from Redux tasks
-          events={events}
-
-          // Handle clicking an event
-          eventClick={onEventClick}
-
-          // Custom render function for each event
-          eventContent={renderEventContent}
-
-          // Make events render as blocks (better for custom pills)
-          eventDisplay="block"
-
-          // Limit how many events show before "+ more" appears
-          dayMaxEventRows={2}
-        />
+        <div className="calendar-container">
+          <FullCalendar
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              start: "today prev,next",
+              center: "title",
+              end: "dayGridMonth,timeGridWeek",
+            }}
+            height="100%"
+            events={events}
+            eventClick={onEventClick}
+            eventContent={renderEventContent}
+            eventDisplay="block"
+            dayMaxEventRows={2}
+          />
+        </div>
       </div>
+
+      <aside className="calendar-sidebar">
+        <div className="sidebar-section">
+          <h3>Today's Focus</h3>
+          <div className="sidebar-tasks">
+            {todayTasks.length === 0 ? (
+              <p className="empty-side">Clear schedule for today.</p>
+            ) : (
+              todayTasks.map((t) => (
+                <div key={t.id} className="side-task-card" style={{ borderLeftColor: colorFromProgress(t.progress) }}>
+                  <span className="task-title">{t.title}</span>
+                  <span className="task-sub">{t.project_name || "General"}</span>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        <div className="sidebar-section">
+          <h3>Upcoming</h3>
+          <div className="sidebar-tasks">
+            {upcomingTasks.length === 0 ? (
+              <p className="empty-side">No upcoming deadlines.</p>
+            ) : (
+              upcomingTasks.map((t) => (
+                <div key={t.id} className="side-task-card upcoming">
+                  <div className="task-info">
+                    <span className="task-title">{t.title}</span>
+                    <span className="task-sub">{new Date(t.due_date).toLocaleDateString("en-GB", { day: 'numeric', month: 'short' })}</span>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </aside>
     </div>
   );
 }
