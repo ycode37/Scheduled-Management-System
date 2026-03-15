@@ -1,0 +1,126 @@
+/* Scrollable Tasks List */
+
+.tasks-card .tasks-list {   /* 2 items tall */
+  max-height: 100px;
+  overflow-y: auto;        /* enables scrolling if more tasks exist */
+  padding-right: 0.5rem;   /* prevents text being hidden under scrollbar */
+  margin: 0;
+  list-style: none;
+}
+
+.top-line {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.view-btn {
+  margin-bottom: 10px;
+  margin-left: auto;
+}
+
+.tasks-card .tasks-list li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e5e7eb;  /* light divider line */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+}
+
+.tasks-card .tasks-list li:hover {
+  background-color: #f9fafb;  /* light hover effect */
+}
+
+/* Subtext layout inside each task */
+.details {
+  display: flex;
+  align-items: center;
+
+  gap: 0.5rem;
+  width: 90%;
+}
+
+.details .name {
+  flex: 1;                 /* takes up the remaining space */
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.details .date {
+  width: 140px;
+  text-align: left;
+  color: #4b5563;
+}
+
+.details .progress {
+  width: 140px;   /* slightly wider for safety */
+  text-align: left;
+  color: #6b7280;
+}
+
+.bottom {
+  display: flex;
+  gap: 2rem;
+}
+
+
+/* Custom scrollbar */
+
+.tasks-card .tasks-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tasks-card .tasks-list::-webkit-scrollbar-thumb {
+  background-color: #d1d5db; /* gray-300 */
+  border-radius: 3px;
+}
+
+.tasks-card .tasks-list::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af; /* gray-400 */
+}
+
+
+@media (max-width: 480px) {
+  .tasks-card .tasks-list {
+    max-height: 11rem;          /* a bit taller since items wrap */
+  }
+
+  .tasks-card .tasks-list li {
+    padding: 0.5rem 0;
+  }
+
+  .details {
+    flex-direction: column;     /* stack text instead of row */
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 0.25rem;
+    font-size: 14px;
+  }
+
+  .details .name {
+    white-space: normal;        /* allow wrapping */
+    font-weight: 600;
+  }
+
+  .details .date {
+    margin-right:2rem ;
+  }
+
+  .details .date,
+  .details .progress {
+    width: auto;                /* no fixed widths */
+    text-align: left;
+    font-size: 11px;
+  }
+
+    .details-bottom {
+    display: flex;
+    gap: 2.5rem;
+    font-size: 11px;
+    color: #4b5563;
+  }
+
+}

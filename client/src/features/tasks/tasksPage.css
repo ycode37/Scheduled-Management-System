@@ -1,0 +1,345 @@
+/* ─────────────────────────────────────────
+   Page wrapper
+───────────────────────────────────────── */
+.task-wrapper {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    animation: slideUpFade 0.8s var(--ease-out-expo);
+}
+
+/* ─────────────────────────────────────────
+   Page header
+───────────────────────────────────────── */
+.page-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--edge);
+    padding-bottom: 24px;
+}
+
+.page-header h1 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 3.5rem;
+    font-weight: 400;
+}
+
+.header-buttons .link-btn {
+    background: var(--accent);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s var(--ease-out-expo);
+}
+
+.header-buttons .link-btn:hover {
+    background: var(--accent-vibrant);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px var(--accent-soft);
+}
+
+/* ─────────────────────────────────────────
+   Add-task form
+───────────────────────────────────────── */
+.add-task-form {
+    background: var(--ink-800);
+    border: 1px solid var(--edge);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 40px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.add-task-form input,
+.add-task-form select {
+    background: var(--ink-900);
+    border: 1px solid var(--edge);
+    border-radius: 2px;
+    padding: 10px 14px;
+    color: var(--chalk-100);
+    font-size: 0.85rem;
+    font-family: var(--font-main);
+    flex: 1 1 140px;
+    min-width: 0;
+}
+
+.add-task-form input:focus,
+.add-task-form select:focus {
+    border-color: var(--chalk-300);
+    outline: none;
+}
+
+/* Keep the project dropdown from growing too wide */
+.add-task-form .project-select {
+    flex: 1 1 180px;
+}
+
+.add-task-form button[type="submit"] {
+    background: var(--chalk-100);
+    color: var(--ink-900);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 2px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+.add-task-form button[type="submit"]:hover {
+    opacity: 0.85;
+}
+
+/* ─────────────────────────────────────────
+   Table wrapper
+───────────────────────────────────────── */
+.task-table-wrapper {
+    overflow-x: auto;
+    /* horizontal scroll on small screens */
+    -webkit-overflow-scrolling: touch;
+}
+
+.task-table {
+    background: var(--ink-800);
+    border: 1px solid var(--edge);
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 600px;
+    /* prevents columns from squishing too hard */
+}
+
+.task-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* ── thead ── */
+.task-table thead th {
+    background: var(--ink-700);
+    color: var(--chalk-300);
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    padding: 16px 24px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* ── tbody ── */
+.task-table tbody td {
+    padding: 20px 24px;
+    color: var(--chalk-100);
+    border-bottom: 1px solid var(--edge);
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.task-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.task-table tbody tr:hover {
+    background: var(--ink-700);
+}
+
+/* Inline edit inputs inside cells */
+.task-table tbody td input[type="text"],
+.task-table tbody td input[type="date"],
+.task-table tbody td input[type="number"],
+.task-table tbody td select {
+    background: var(--ink-900);
+    border: 1px solid var(--chalk-300);
+    border-radius: 2px;
+    padding: 6px 10px;
+    color: var(--chalk-100);
+    font-size: 0.85rem;
+    font-family: var(--font-main);
+    width: 100%;
+    outline: none;
+}
+
+/* ─────────────────────────────────────────
+   Sort icon buttons (in thead)
+───────────────────────────────────────── */
+.sortIcon-btn,
+.sortingIcon-btn {
+    background: none;
+    border: none;
+    padding: 0 0 0 6px;
+    cursor: pointer;
+    vertical-align: middle;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.sortIcon-btn:hover,
+.sortingIcon-btn:hover {
+    opacity: 1;
+}
+
+.sortIcon {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+}
+
+/* ─────────────────────────────────────────
+   Progress cell
+───────────────────────────────────────── */
+.progress-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.progress-track {
+    height: 2px;
+    background: var(--ink-600);
+    width: 80px;
+    border-radius: 1px;
+    flex-shrink: 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 1px;
+    transition: width 0.3s ease;
+}
+
+.progress-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.progress-text {
+    font-size: 0.75rem;
+    color: var(--chalk-300);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─────────────────────────────────────────
+   Pencil / edit-btn (inside cells)
+───────────────────────────────────────── */
+.edit-btn {
+    background: none;
+    border: none;
+    padding: 0 0 0 8px;
+    cursor: pointer;
+    opacity: 0.4;
+    vertical-align: middle;
+    transition: opacity 0.2s;
+    display: inline-flex;
+    align-items: center;
+}
+
+.edit-btn:hover {
+    opacity: 1;
+}
+
+.edit-btn img {
+    width: 13px;
+    height: 13px;
+}
+
+/* ─────────────────────────────────────────
+   Actions column
+───────────────────────────────────────── */
+.actions {
+    white-space: nowrap;
+}
+
+.actions-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* "Edit" / "Close" link-style buttons inside rows */
+.actions .link-btn {
+    background: none;
+    border: none;
+    color: var(--chalk-300);
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.actions .link-btn:hover {
+    color: var(--chalk-100);
+}
+
+/* Delete button */
+.delete-btn {
+    background: none;
+    border: none;
+    color: var(--danger);
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s;
+}
+
+.delete-btn:hover {
+    opacity: 0.7;
+}
+
+/* ─────────────────────────────────────────
+   Responsive
+───────────────────────────────────────── */
+@media (max-width: 900px) {
+    .page-header h1 {
+        font-size: 2.2rem;
+    }
+
+    .add-task-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .add-task-form input,
+    .add-task-form select {
+        flex: unset;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .task-table tbody td {
+        padding: 14px 16px;
+    }
+
+    .task-table thead th {
+        padding: 12px 16px;
+    }
+}

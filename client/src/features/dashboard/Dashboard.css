@@ -1,0 +1,154 @@
+.dashboard-wrapper {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.stagger {
+  display: flex;
+  flex-direction: column;
+  gap: 80px; /* Strong vertical separation */
+  padding: 40px 0;
+}
+
+/* Page Title with Serif Accent */
+.dashboard-header h1 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: 0.8;
+  margin-bottom: 64px;
+}
+
+/* Grid Architecture */
+.upper,
+.lower {
+  display: grid;
+  gap: 60px; /* Strong horizontal separation */
+}
+
+.upper {
+  grid-template-columns: 2fr 1fr; /* Adjusted for better balance */
+}
+
+.lower {
+  grid-template-columns: 1fr; /* Full width for the signature calendar */
+}
+
+/* Module Base Styling */
+.tasks-card,
+.projects-card,
+.calendar-card {
+  background: var(--ink-800);
+  border: 1px solid var(--edge);
+  border-radius: 4px;
+  padding: 32px;
+  position: relative;
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.tasks-card:hover,
+.projects-card:hover,
+.calendar-card:hover {
+  border-color: var(--chalk-300);
+  transform: translateY(-2px);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+}
+
+/* Section Labels */
+.dashboard-wrapper h2 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--chalk-300);
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--edge);
+  padding-bottom: 12px;
+}
+
+.dashboard-wrapper h2 button {
+  font-size: 0.65rem;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* List Items - Sophisticated Typography */
+.tasks-list ul,
+.projects-list ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.tasks-list li,
+.projects-list li {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--edge);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.2s ease;
+}
+
+.tasks-list li:hover,
+.projects-list li:hover {
+  padding-left: 8px;
+  border-bottom-color: var(--chalk-300);
+}
+
+.tasks-list .checkbox {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--chalk-300);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.tasks-list li:hover .checkbox {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-soft);
+}
+
+/* Project Specifics */
+.projects-list .name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--chalk-100);
+  flex: 1;
+}
+
+.projects-list .count {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--chalk-300);
+  background: var(--ink-700);
+  padding: 4px 12px;
+  border-radius: 2px;
+}
+
+/* Responsive Editorial Adjustments */
+@media (max-width: 1200px) {
+
+  .upper,
+  .lower {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-header h1 {
+    font-size: 2.2rem;
+  }
+}

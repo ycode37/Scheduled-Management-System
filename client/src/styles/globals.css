@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap');
+
+:root {
+  /* Architectural Palette */
+  --ink-900: #08080a;
+  --ink-800: #121214;
+  --ink-700: #1a1a1c;
+  --ink-600: #2a2a2d;
+  
+  --chalk-100: #f4f4f5;
+  --chalk-200: #e4e4e7;
+  --chalk-300: #a1a1aa;
+  
+  --accent: #5252ff; /* Sharp Indigo */
+  --accent-soft: rgba(82, 82, 255, 0.1);
+  --accent-vibrant: #7979ff;
+  
+  --safe: #10b981;
+  --danger: #ff4d4d;
+  
+  /* Precision Spacing */
+  --space-unit: 8px;
+  --container-width: 1440px;
+  
+  /* Architectural Borders */
+  --edge: rgba(255, 255, 255, 0.04);
+  --edge-active: rgba(255, 255, 255, 0.08);
+  
+  /* Typography Scale */
+  --font-main: 'Geist', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif;
+  --font-serif: 'Instrument Serif', serif;
+  
+  /* Animation Timing - Crisp */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: default;
+}
+
+button, a, input, [role="button"] {
+  cursor: pointer;
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--ink-900);
+  color: var(--chalk-100);
+  font-family: var(--font-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--ink-600); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--chalk-300); }
+
+/* Layout Architecture */
+.shell {
+  display: flex;
+  height: 100vh;
+  background: radial-gradient(circle at 0% 0%, #1c1c1f 0%, #08080a 100%);
+  position: relative;
+}
+
+/* Noise Texture Overlay for grainier, designer feel */
+.shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3column%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 99;
+}
+
+.main-layout {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--ink-900);
+  border-left: 1px solid var(--edge);
+  position: relative;
+}
+
+.content {
+  flex: 1;
+  padding: 4vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+/* Global Typography */
+h1, h2, h3 {
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--chalk-100);
+}
+
+.serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Base Transitions */
+.smooth-entry {
+  animation: slideUpFade 0.7s var(--ease-out-expo) forwards;
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(10px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* Stagger Effects */
+.stagger > * {
+  opacity: 0;
+  animation: slideUpFade 0.6s var(--ease-out-expo) forwards;
+}
+
+.stagger > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger > *:nth-child(2) { animation-delay: 0.15s; }
+.stagger > *:nth-child(3) { animation-delay: 0.2s; }
+.stagger > *:nth-child(4) { animation-delay: 0.25s; }
+
+/* Responsive Grid Adjustments */
+@media (max-width: 1024px) {
+  .content { padding: 40px 24px; }
+}

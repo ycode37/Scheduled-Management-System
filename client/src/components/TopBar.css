@@ -1,0 +1,72 @@
+.topbar {
+  padding: 24px 4vw;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 32px;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 600px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-left: 24px;
+  border-left: 1px solid var(--edge);
+}
+
+.profile span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--chalk-300);
+}
+
+.profile .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px; /* Squared off for studio look */
+  background: var(--ink-700);
+  color: var(--chalk-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.75rem;
+  box-shadow: 0 0 0 1px var(--edge-active);
+}
+
+.logout-btn {
+  background: var(--ink-800);
+  border: 1px solid var(--edge);
+  color: var(--chalk-300);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s var(--ease-out-expo);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.logout-btn:hover {
+  background: var(--chalk-100);
+  color: var(--ink-900);
+  border-color: var(--chalk-100);
+}
+
+@media (max-width: 900px) {
+  .topbar { padding: 20px; }
+  .profile span { display: none; }
+}

@@ -1,0 +1,122 @@
+.search-container {
+  width: 100%;
+  position: relative;
+}
+
+.searchbar-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--ink-800);
+  border: 1px solid var(--edge);
+  border-radius: 4px;
+  padding: 2px 16px;
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.searchbar-form:focus-within {
+  border-color: var(--chalk-300);
+  background: var(--ink-700);
+}
+
+.searchbar-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 10px 0;
+  color: var(--chalk-100);
+  font-family: var(--font-main);
+}
+
+.searchbar-input::placeholder {
+  color: var(--chalk-300);
+  opacity: 0.5;
+}
+
+.search-icon-btn {
+  background: none;
+  border: none;
+  color: var(--chalk-300);
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.searchbar-form:focus-within .search-icon-btn {
+  color: var(--accent);
+}
+
+/* Results Dropdown - High End Architectural Look */
+.task-search-results {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  right: 0;
+  background: var(--ink-800);
+  border: 1px solid var(--edge);
+  border-radius: 4px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 30;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  animation: dropdownReveal 0.4s var(--ease-out-expo);
+}
+
+@keyframes dropdownReveal {
+  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.task-search-results ul {
+  list-style: none;
+  padding: 8px;
+}
+
+.task-search-results li {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s var(--ease-out-expo);
+}
+
+.task-search-results li:hover {
+  background: var(--ink-700);
+}
+
+.search-result-type {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--chalk-300);
+  opacity: 0.4;
+  letter-spacing: 0.1em;
+  width: 60px;
+}
+
+.search-result-label {
+  font-size: 0.85rem;
+  color: var(--chalk-100);
+}
+
+.search-result-meta {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: var(--chalk-300);
+}
+
+.task-search-empty {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  right: 0;
+  padding: 24px;
+  color: var(--chalk-300);
+  background: var(--ink-800);
+  border: 1px solid var(--edge);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  text-align: center;
+}

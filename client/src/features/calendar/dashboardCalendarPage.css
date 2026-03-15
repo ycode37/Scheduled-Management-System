@@ -1,0 +1,16 @@
+/* =========================================
+   Dashboard Calendar: event hover + pointer
+   (FullCalendar default event markup)
+========================================= */
+
+/* Make events feel clickable */
+.calendar-card .fc-event {
+  cursor: pointer;                 /* finger pointer */
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+/* Hover = slightly dimmer + tiny lift */
+.calendar-card .fc-event:hover {
+  filter: brightness(0.9);
+  transform: translateY(-1px);
+}

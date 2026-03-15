@@ -1,0 +1,273 @@
+/* Page container (match Tasks/Projects width) */
+.card-wrapper {
+  max-width: 980px;              /* same feel as tasks page */
+  margin: 0 auto;
+  padding: 26px 18px 44px;
+}
+
+/* ------------------------------
+   Header card
+------------------------------ */
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "back meta"
+    "title meta";
+  align-items: end;
+  gap: 10px 18px;
+
+  padding: 18px 18px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(17, 24, 39, 0.10);
+  margin-bottom: 18px;
+}
+
+/* Back button sits top-left */
+.header .link-btn {
+  grid-area: back;
+  justify-self: start;
+}
+
+/* Title */
+.header .name {
+  grid-area: title;
+  margin: 0;
+  font-size: clamp(34px, 3.6vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+/* Meta area (Due + Status) */
+.header .meta {
+  grid-area: meta;
+  justify-self: end;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Meta chips */
+.header .meta span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+}
+
+/* ------------------------------
+   Tasks section card
+------------------------------ */
+.tasks {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(17, 24, 39, 0.10);
+  overflow: hidden; /* keeps header/rows clean */
+}
+
+/* Column header row */
+.task-columns {
+  display: grid;
+  grid-template-columns: 1.2fr 0.7fr 0.8fr;
+  gap: 16px;
+
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* Empty messages */
+.empty {
+  padding: 18px 16px;
+  color: #000000;
+  font-weight: 400;
+}
+
+/* List reset */
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Task row (read-only + edit mode share the same grid) */
+.task-row {
+  display: grid;
+  grid-template-columns: 1.2fr 0.7fr 0.8fr;
+  gap: 16px;
+  align-items: center;
+
+  padding: 14px 16px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.task-row:hover {
+  background: #fafafa;
+}
+
+/* Task name */
+.task-name {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Muted due date */
+.muted,
+.task-due {
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Progress + actions */
+.task-progress {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Make the % value stand out a bit */
+.task-row .task-progress {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ------------------------------
+   Inputs (edit row + add row)
+------------------------------ */
+.task-row input[type="text"],
+.task-row input[type="date"],
+.task-row input[type="number"],
+.add-task-inline input[type="text"],
+.add-task-inline input[type="date"],
+.add-task-inline input[type="number"] {
+  height: 44px;
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 0 12px;
+  font-size: 14px;
+  background: #fff;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.task-row input:focus,
+.add-task-inline input:focus {
+  outline: none;
+  border-color: #10a371;
+  box-shadow: 0 0 0 4px rgba(16, 163, 113, 0.15);
+}
+
+.task-row input[type="number"] {
+  max-width: 90px;
+}
+
+/* ------------------------------
+   Add-task inline row (inside the card)
+------------------------------ */
+.add-task-inline {
+  display: grid;
+  grid-template-columns: 1.2fr 0.7fr 0.8fr;
+  gap: 16px;
+  align-items: center;
+
+  padding: 14px 16px;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+/* Put Add button at the end nicely */
+.add-task-inline .task-progress {
+  justify-content: flex-end;
+}
+
+/* ------------------------------
+   Buttons (match Tasks page style)
+------------------------------ */
+.link-btn {
+  appearance: none;
+  border: 0;
+  background: none;
+  color: #0f7a53;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  text-decoration: underline;
+}
+
+.link-btn:hover {
+  color: #10a371;
+}
+
+.delete-btn {
+  appearance: none;
+  border: 0;
+  background: none;
+  color: #dc2626;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  text-decoration: underline;
+}
+
+.delete-btn:hover {
+  color: #b91c1c;
+}
+
+/* Solid dark button (Save/Add Task) */
+.save-btn {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 14px;
+  border: 1px solid #111827;
+  background: #111827;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  filter: brightness(1.05);
+}
+
+/* ------------------------------
+   Responsive
+------------------------------ */
+@media (max-width: 820px) {
+  .header {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "back"
+      "title"
+      "meta";
+    align-items: start;
+  }
+
+  .header .meta {
+    justify-self: start;
+  }
+
+  .task-columns,
+  .task-row,
+  .add-task-inline {
+    grid-template-columns: 1fr;
+  }
+
+  .task-progress {
+    justify-content: flex-start;
+  }
+}
+
