@@ -10,36 +10,28 @@ const SALT_ROUNDS = 10;
 
 // Service function to register a new user
 export const registerUser = async ({ username, email, password }) => {
-  // Hash the user's password before storing it in the database
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
   try {
-    // Insert the new user into the database
     const result = await pool.query(
-      `INSERT INTO users (username, email, password, role, first_name, last_name) 
-   VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, username, email, role`,
+      `INSERT INTO users (username, email, password_hash, role) 
+       VALUES ($1, $2, $3, $4) 
+       RETURNING id, username, email, role`,
       [
         username,
         email,
         hashedPassword,
-        role,
-        firstName ?? null,
-        lastName ?? null,
+        "user", // ✅ hardcoded default role
       ],
     );
 
-    // Return the created user (without password)
     return result.rows[0];
   } catch (err) {
-    // PostgreSQL error code 23505 = unique constraint violation
-    // This usually means the email already exists
     if (err.code === "23505") {
       const e = new Error("EMAIL_ALREADY_EXISTS");
       e.status = 409;
       throw e;
     }
-
-    // Re-throw any other database errors
     throw err;
   }
 };
