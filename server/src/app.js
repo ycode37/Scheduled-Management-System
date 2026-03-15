@@ -16,7 +16,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://simplitask-pro-930y.onrender.com"
+      "https://scheduled-management-system.vercel.app"
     ]
   })
 );
