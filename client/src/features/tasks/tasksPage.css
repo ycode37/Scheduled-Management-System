@@ -39,6 +39,7 @@
     cursor: pointer;
     border: none;
     transition: all 0.3s var(--ease-out-expo);
+    white-space: nowrap;
 }
 
 .header-buttons .link-btn:hover {
@@ -110,7 +111,6 @@
 ───────────────────────────────────────── */
 .task-table-wrapper {
     overflow-x: auto;
-    /* horizontal scroll on small screens */
     -webkit-overflow-scrolling: touch;
 }
 
@@ -120,7 +120,6 @@
     border-radius: 4px;
     overflow: hidden;
     min-width: 600px;
-    /* prevents columns from squishing too hard */
 }
 
 .task-table table {
@@ -309,7 +308,7 @@
 }
 
 /* ─────────────────────────────────────────
-   Responsive
+   Responsive – Tablet
 ───────────────────────────────────────── */
 @media (max-width: 900px) {
     .page-header h1 {
@@ -328,18 +327,118 @@
     }
 }
 
-@media (max-width: 600px) {
+/* ─────────────────────────────────────────
+   Responsive – Mobile: Card-based layout
+───────────────────────────────────────── */
+@media (max-width: 768px) {
     .page-header {
         flex-direction: column;
         gap: 16px;
         align-items: flex-start;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .add-task-form {
+        padding: 12px;
+        margin-bottom: 24px;
+        gap: 10px;
+    }
+
+    .task-table-wrapper {
+        overflow-x: visible;
+    }
+
+    /* Remove min-width constraint for mobile */
+    .task-table {
+        min-width: 0;
+        border: none;
+        background: transparent;
+    }
+
+    /* Hide table header on mobile */
+    .task-table thead {
+        display: none;
+    }
+
+    /* Transform table rows into cards */
+    .task-table table,
+    .task-table tbody,
+    .task-table tbody tr,
+    .task-table tbody td {
+        display: block;
+    }
+
+    .task-table tbody tr {
+        background: var(--ink-800);
+        border: 1px solid var(--edge);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        padding: 16px;
+        transition: border-color 0.2s ease;
+    }
+
+    .task-table tbody tr:hover {
+        background: var(--ink-800);
+        border-color: var(--edge-active);
     }
 
     .task-table tbody td {
-        padding: 14px 16px;
+        padding: 8px 0;
+        border-bottom: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
     }
 
-    .task-table thead th {
-        padding: 12px 16px;
+    /* Show data labels on mobile */
+    .task-table tbody td::before {
+        content: attr(data-label);
+        font-size: 0.6rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--chalk-300);
+        flex-shrink: 0;
+        min-width: 80px;
+    }
+
+    .task-table tbody td.actions {
+        padding-top: 12px;
+        margin-top: 8px;
+        border-top: 1px solid var(--edge);
+        justify-content: flex-start;
+    }
+
+    .task-table tbody td.actions::before {
+        display: none;
+    }
+
+    .progress-track {
+        width: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .header-buttons .link-btn {
+        padding: 10px 16px;
+        font-size: 0.7rem;
+    }
+
+    .task-table tbody tr {
+        padding: 12px;
+    }
+
+    .task-table tbody td {
+        font-size: 0.85rem;
     }
 }

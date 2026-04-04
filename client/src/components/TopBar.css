@@ -14,6 +14,24 @@
   gap: 32px;
 }
 
+/* Hamburger button – hidden on desktop */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: 1px solid var(--edge);
+  color: var(--chalk-100);
+  font-size: 1.3rem;
+  border-radius: 6px;
+  padding: 8px 10px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.hamburger-btn:hover {
+  background: var(--ink-700);
+  border-color: var(--edge-active);
+}
+
 .search-container {
   flex: 1;
   max-width: 600px;
@@ -25,6 +43,7 @@
   gap: 16px;
   padding-left: 24px;
   border-left: 1px solid var(--edge);
+  flex-shrink: 0;
 }
 
 .profile span {
@@ -36,7 +55,7 @@
 .profile .avatar {
   width: 32px;
   height: 32px;
-  border-radius: 4px; /* Squared off for studio look */
+  border-radius: 4px;
   background: var(--ink-700);
   color: var(--chalk-100);
   display: flex;
@@ -45,6 +64,7 @@
   font-weight: 600;
   font-size: 0.75rem;
   box-shadow: 0 0 0 1px var(--edge-active);
+  flex-shrink: 0;
 }
 
 .logout-btn {
@@ -58,6 +78,7 @@
   transition: all 0.2s var(--ease-out-expo);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 .logout-btn:hover {
@@ -66,7 +87,59 @@
   border-color: var(--chalk-100);
 }
 
+/* ─── Tablet ─── */
 @media (max-width: 900px) {
   .topbar { padding: 20px; }
   .profile span { display: none; }
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .topbar {
+    padding: 16px;
+  }
+
+  .top {
+    gap: 12px;
+  }
+
+  .search-container {
+    max-width: none;
+  }
+
+  .profile {
+    gap: 10px;
+    padding-left: 12px;
+  }
+
+  .profile span {
+    display: none;
+  }
+
+  .logout-btn {
+    padding: 6px 10px;
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .top {
+    gap: 8px;
+  }
+
+  .profile {
+    border-left: none;
+    padding-left: 0;
+    gap: 8px;
+  }
+
+  .logout-btn {
+    display: none; /* Only avatar + hamburger on very small screens */
+  }
 }

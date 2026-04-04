@@ -8,7 +8,7 @@
 .stagger {
   display: flex;
   flex-direction: column;
-  gap: 80px; /* Strong vertical separation */
+  gap: 80px;
   padding: 40px 0;
 }
 
@@ -25,15 +25,15 @@
 .upper,
 .lower {
   display: grid;
-  gap: 60px; /* Strong horizontal separation */
+  gap: 60px;
 }
 
 .upper {
-  grid-template-columns: 2fr 1fr; /* Adjusted for better balance */
+  grid-template-columns: 2fr 1fr;
 }
 
 .lower {
-  grid-template-columns: 1fr; /* Full width for the signature calendar */
+  grid-template-columns: 1fr;
 }
 
 /* Module Base Styling */
@@ -46,6 +46,7 @@
   padding: 32px;
   position: relative;
   transition: all 0.4s var(--ease-out-expo);
+  min-width: 0; /* prevent flex/grid overflow */
 }
 
 .tasks-card:hover,
@@ -114,6 +115,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s var(--ease-out-expo);
+  flex-shrink: 0;
 }
 
 .tasks-list li:hover .checkbox {
@@ -127,6 +129,10 @@
   font-weight: 500;
   color: var(--chalk-100);
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .projects-list .count {
@@ -136,19 +142,77 @@
   background: var(--ink-700);
   padding: 4px 12px;
   border-radius: 2px;
+  flex-shrink: 0;
 }
 
-/* Responsive Editorial Adjustments */
+/* ─── Responsive ─── */
 @media (max-width: 1200px) {
-
   .upper,
   .lower {
     grid-template-columns: 1fr;
   }
 }
 
+@media (max-width: 768px) {
+  .stagger {
+    gap: 40px;
+    padding: 24px 0;
+  }
+
+  .dashboard-header h1 {
+    margin-bottom: 32px;
+  }
+
+  .upper,
+  .lower {
+    gap: 24px;
+  }
+
+  .tasks-card,
+  .projects-card,
+  .calendar-card {
+    padding: 20px;
+  }
+
+  .tasks-card:hover,
+  .projects-card:hover,
+  .calendar-card:hover {
+    transform: none; /* disable lift on mobile (no hover) */
+    box-shadow: none;
+  }
+
+  .dashboard-wrapper h2 {
+    margin-bottom: 20px;
+  }
+
+  .tasks-list li,
+  .projects-list li {
+    padding: 16px 0;
+    gap: 14px;
+  }
+}
+
 @media (max-width: 600px) {
   .dashboard-header h1 {
     font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tasks-card,
+  .projects-card,
+  .calendar-card {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .tasks-list li,
+  .projects-list li {
+    padding: 12px 0;
+    gap: 10px;
+  }
+
+  .projects-list .name {
+    font-size: 0.95rem;
   }
 }

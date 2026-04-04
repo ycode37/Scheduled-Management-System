@@ -43,12 +43,14 @@
   line-height: 1;
   color: var(--chalk-100);
   margin: 0;
+  word-break: break-word;
 }
 
 .header .meta {
   display: flex;
   gap: 16px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .header .meta span {
@@ -61,6 +63,7 @@
   background: var(--ink-700);
   border-radius: 100px;
   border: 1px solid var(--edge);
+  white-space: nowrap;
 }
 
 /* ------------------------------
@@ -116,6 +119,7 @@
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--chalk-100);
+  word-break: break-word;
 }
 
 .task-due {
@@ -129,6 +133,7 @@
   gap: 12px;
   font-size: 0.95rem;
   color: var(--chalk-200);
+  flex-wrap: wrap;
 }
 
 /* ------------------------------
@@ -228,7 +233,7 @@ input:focus {
 }
 
 /* ------------------------------
-   Responsive
+   Responsive – Tablet
 ------------------------------ */
 @media (max-width: 900px) {
   .task-columns {
@@ -258,9 +263,44 @@ input:focus {
   }
 }
 
-@media (max-width: 600px) {
+/* ------------------------------
+   Responsive – Mobile
+------------------------------ */
+@media (max-width: 768px) {
+  .card-wrapper {
+    gap: 20px;
+  }
+
+  .header {
+    gap: 16px;
+    padding-bottom: 24px;
+  }
+
   .header .name {
     font-size: 2.5rem;
+  }
+
+  .task-row, .add-task-inline {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .add-task-inline {
+    padding: 20px 16px;
+  }
+
+  .task-name {
+    font-size: 1rem;
+  }
+
+  .task-progress {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header .name {
+    font-size: 2rem;
   }
   
   .header .meta {
@@ -269,4 +309,22 @@ input:focus {
   }
 }
 
+@media (max-width: 480px) {
+  .header .name {
+    font-size: 1.6rem;
+  }
 
+  .header .meta span {
+    font-size: 0.6rem;
+    padding: 5px 10px;
+  }
+
+  .task-row, .add-task-inline {
+    padding: 12px;
+  }
+
+  .save-btn {
+    padding: 8px 14px;
+    font-size: 0.65rem;
+  }
+}

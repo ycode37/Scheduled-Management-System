@@ -1,14 +1,20 @@
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 
-const Sidebar = () => {
+const Sidebar = ({ onClose }) => {
 
     const getLinkClass = ({ isActive }) => (isActive ? "active" : "");
 
     return (
         <div className="side">
-            <div className="logo-container">
-                <h3>Simpli<span>Task</span></h3>
+            <div className="side-top-row">
+                <div className="logo-container">
+                    <h3>Simpli<span>Task</span></h3>
+                </div>
+                {/* Close button visible only on mobile */}
+                <button className="sidebar-close-btn" onClick={onClose} type="button" aria-label="Close menu">
+                    <i className="ri-close-line"></i>
+                </button>
             </div>
             <ul>
                 <li>
@@ -37,3 +43,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+

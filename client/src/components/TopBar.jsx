@@ -3,7 +3,7 @@ import Searchbar from "./Searchbar";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const TopBar = () => {
+const TopBar = ({ onMenuToggle }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -12,13 +12,15 @@ const TopBar = () => {
     navigate("/auth");
   };
 
-  // Optional fallback if user isn't loaded yet
   if (!user) return null;
-
-  console.log("TopBar user:", user);
 
   return (
     <div className="top">
+      {/* Hamburger button - visible on mobile only */}
+      <button className="hamburger-btn" onClick={onMenuToggle} type="button" aria-label="Open menu">
+        <i className="ri-menu-line"></i>
+      </button>
+
       <div className="search-container">
         <Searchbar />
       </div>

@@ -15,6 +15,7 @@
     border: 1px solid var(--edge);
     border-radius: 12px;
     overflow: hidden;
+    min-width: 0; /* prevent flex overflow */
 }
 
 .calendar-main-area .page-header {
@@ -116,6 +117,7 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+    flex-shrink: 0;
 }
 
 .sidebar-section {
@@ -184,7 +186,7 @@
     opacity: 0.6;
 }
 
-/* Responsive */
+/* ─── Responsive ─── */
 @media (max-width: 1200px) {
     .calendar-wrapper-premium {
         flex-direction: column;
@@ -200,10 +202,91 @@
 }
 
 @media (max-width: 768px) {
+    .calendar-wrapper-premium {
+        gap: 20px;
+    }
+
     .calendar-sidebar {
         flex-direction: column;
     }
+
+    .calendar-main-area .page-header {
+        padding: 20px;
+    }
+
     .calendar-main-area .page-header h1 {
         font-size: 1.75rem;
+    }
+
+    .calendar-main-area .subtitle {
+        font-size: 0.8rem;
+    }
+
+    .calendar-container {
+        padding: 12px;
+    }
+
+    /* FullCalendar mobile toolbar */
+    .fc .fc-toolbar {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch !important;
+    }
+
+    .fc .fc-toolbar-chunk {
+        display: flex;
+        justify-content: center;
+    }
+
+    .fc .fc-toolbar-title {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .fc .fc-button-primary {
+        font-size: 0.6rem;
+        padding: 6px 10px;
+    }
+
+    .fc .fc-col-header-cell-cushion {
+        font-size: 0.55rem;
+        padding: 8px 0;
+    }
+
+    .fc .fc-daygrid-day-number {
+        font-size: 0.75rem;
+        padding: 4px;
+    }
+
+    .fc .task-pill {
+        font-size: 0.65rem;
+        padding: 3px 6px;
+    }
+
+    .sidebar-section {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-main-area .page-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .calendar-container {
+        padding: 8px;
+    }
+
+    .fc .fc-button-primary {
+        font-size: 0.55rem;
+        padding: 5px 8px;
+    }
+
+    .side-task-card {
+        padding: 10px 12px;
+    }
+
+    .task-title {
+        font-size: 0.85rem;
     }
 }

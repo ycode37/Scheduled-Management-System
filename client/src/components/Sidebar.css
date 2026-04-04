@@ -15,6 +15,26 @@
   gap: 6.4vh;
 }
 
+.side-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-close-btn {
+  display: none; /* Hidden on desktop */
+  background: none;
+  border: none;
+  color: var(--chalk-300);
+  font-size: 1.4rem;
+  transition: color 0.2s ease;
+  padding: 4px;
+}
+
+.sidebar-close-btn:hover {
+  color: var(--chalk-100);
+}
+
 .logo-container h3 {
   font-family: var(--font-serif);
   font-style: italic;
@@ -38,7 +58,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Standardized spacing */
+  gap: 8px;
 }
 
 .side ul li a {
@@ -91,8 +111,25 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .sidebar {
-    display: none;
+    display: flex;
+    width: 280px;
+    padding: 24px 20px;
+  }
+
+  .sidebar-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .side ul li a {
+    padding: 14px 16px;
+    font-size: 1rem;
+  }
+
+  .side ul li a i {
+    font-size: 1.25rem;
   }
 }
